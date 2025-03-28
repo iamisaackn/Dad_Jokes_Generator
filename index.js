@@ -9,43 +9,58 @@ const apiKey = "s7hrJiC06YHzY/KGSKJY/A==2j7TlUBB6mHmL5ep";
 
 // Set the options for the fetch request
 const options = {
-  method: 'GET',
-  headers: { "X-Api-Key": apiKey },
+    method: 'GET',
+    headers: { "X-Api-Key": apiKey },
 };
 
 // Define the API URL to fetch a single dad joke
 const apiURL = "https://api.api-ninjas.com/v1/dadjokes?limit=1";
 
-// Define an async function named getJoke to fetch and update the joke
 async function getJoke() {
-  try {
-    // Display "Updating..." while fetching the joke
-    jokeEl.innerText = "Updating...";
+    try {
+        // Display "Updating..." while fetching the joke
+        jokeEl.innerText = "Updating...";
 
-    // Disable the button and change the text to "Loading..."
-    btnEl.disabled = true;
-    btnEl.innerText = "Loading...";
+        // Fetch the joke from the API
+        const response = await fetch(apiURL, options);
+        const data = await response.json();
 
-    // Fetch the joke from the API
-    const response = await fetch(apiURL, options);
-    const data = await response.json();
-
-    // Enable the button and change the text back to "Tell me a joke"
-    btnEl.disabled = false;
-    btnEl.innerText = "Tell me a joke";
-
-    // Update the joke text with the fetched joke
-    jokeEl.innerText = data[0].joke;
-    // console.log(data[0].joke);
-  } catch (error) {
-    // Handle errors by displaying an error message
-    jokeEl.innerText = "An error happened. Please try again later.";
-
-    // Enable the button and change the text back to "Tell me a joke"
-    btnEl.disabled = false;
-    btnEl.innerText = "Tell me a joke";
-  }
+        // Update the joke text with the fetched joke
+        jokeEl.innerText = data[0].joke;
+    } catch (error) {
+        // Handle errors
+        jokeEl.innerText = "An error happened. Please try again later.";
+        console.error("Error fetching joke:", error);
+    }
 }
+
 
 // Add a click event listener to the button, which calls the getJoke function
 btnEl.addEventListener("click", getJoke);
+
+const startsE1 = document.querySelectorAll(".fa-star");
+const emojisE1 = document.querySelectorAll(".fa-face");
+
+const colors = ["red", "orange", "lightblue", "green", "purple"];
+
+updateRating(0);
+
+startsE1.forEach((startE1, index) => {
+    startE1.addEventListener("click", () => {
+        updateRating(index);
+    });
+});
+
+function updateRating(index) {
+    startsE1.forEach((startE1, idx) => {
+        if (idx <= index) {
+            startE1.classList.add("active");
+        } else {
+            startE1.classList.remove("active");
+        }
+    });
+    emojisE1.forEach((emoji) => {
+        emoji.style.transform = `translateX(-${index * 48}px)`;
+        emoji.style.color = colors[index];
+    });
+}
