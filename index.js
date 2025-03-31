@@ -67,71 +67,78 @@ function updateRating(index) {
 
 
 
-
-// -------------------------------- sign up ---------------------------------------
-document.getElementById('signup-form').addEventListener('submit', function (event) {
-    event.preventDefault();
-
-    const firstname = document.getElementById('firstname').value;
-    const lastname = document.getElementById('lastname').value;
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    const confirmPassword = document.getElementById('confirmPassword').value;
-
-    console.log('Firstname:', firstname);
-    console.log('Lastname:', lastname);
-    console.log('Email:', email);
-    console.log('Password:', password);
-    console.log('Confirm Password:', confirmPassword);
-
-    if (password !== confirmPassword) {
-        alert("Passwords do not match!");
-        return;
-    }
-
-    // Add your signup logic here (e.g., AJAX request to a server)
-});
-
-
-
-
-// ----------------------------- Log In -------------------------------------
 document.addEventListener("DOMContentLoaded", function () {
-    // Register Form Submission
-    let registerForm = document.getElementById("registerForm");
-    if (registerForm) {
-        registerForm.addEventListener("submit", function (event) {
+    // Default user information
+    const defaultUser = {
+        firstname: "Isaac",
+        lastname: "Ngugi",
+        email: "1049049@cuea.edu",
+        password: "1049049"
+    };
+
+    // Simulated "database" for storing user data, including default user
+    const usersDB = [defaultUser];
+
+    // Signup Logic
+    const signupForm = document.getElementById("signup-form");
+    if (signupForm) {
+        signupForm.addEventListener("submit", function (event) {
             event.preventDefault();
 
-            let password = document.getElementById("password").value;
-            let confirmPassword = document.getElementById("confirmPassword").value;
+            const firstname = document.getElementById("firstname").value;
+            const lastname = document.getElementById("lastname").value;
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+            const confirmPassword = document.getElementById("confirmPassword").value;
 
+            // Check if passwords match
             if (password !== confirmPassword) {
                 alert("Passwords do not match!");
-            } else {
-                alert("Registration successful!");
-                this.reset();
+                return;
             }
+
+            // Check if the email already exists in the "database"
+            const userExists = usersDB.some(user => user.email === email);
+            if (userExists) {
+                alert("Email already exists! Please log in.");
+                window.location.href = "login.html"; // Redirect to login page
+                return;
+            }
+
+            // Save the new user to the "database"
+            usersDB.push({ firstname, lastname, email, password });
+            alert("Signup successful! You can now log in.");
+            window.location.href = "login.html"; // Redirect to login page
         });
     }
 
-    // Login Form Submission
-    let loginForm = document.getElementById("loginForm");
+    // Login Logic
+    const loginForm = document.getElementById("login-form");
     if (loginForm) {
         loginForm.addEventListener("submit", function (event) {
             event.preventDefault();
 
-            let email = document.getElementById("email").value;
-            let password = document.getElementById("password").value;
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
 
-            if (email === "user@example.com" && password === "password123") {
-                alert("Login successful!");
-                window.location.href = "dashboard.html"; // Redirect to dashboard
-            } else {
-                alert("Invalid email or password!");
+            // Find the user in the "database"
+            const user = usersDB.find(user => user.email === email);
+
+            if (!user) {
+                alert("Email not found! Please sign up.");
+                window.location.href = "signup.html"; // Redirect to signup page
+                return;
             }
+
+            // Check if the password matches
+            if (user.password !== password) {
+                alert("Incorrect password!");
+                return;
+            }
+
+            alert("Login successful!");
+            window.location.href = "home.html"; // Redirect to home page
         });
     }
 });
-
 

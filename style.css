@@ -7,6 +7,7 @@ body {
     display: flex;
     flex-direction: column;
     font-family: monospace;
+    font-size: 18px;
 }
 
 /* Navigation Bar */
@@ -86,7 +87,6 @@ body {
 }
 
 .btn {
-    font-size: 18px;
     font-weight: 700;
     border-radius: 5px;
     cursor: pointer;
@@ -210,6 +210,12 @@ body {
     .signup-box button:hover, .login-box button:hover {
         background-color: #0056b3;
     }
+
+a {
+    text-decoration: none; /* Removes underline from links */
+    color: inherit; /* Keeps the link color same as surrounding text */
+    font-size: inherit; /* Retains original font size */
+}
 
 .links {
     text-align: center;

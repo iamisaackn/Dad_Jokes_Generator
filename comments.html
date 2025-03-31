@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dads Jokes Generator</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            margin: 0;
+            background: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            font-family: monospace;
+        }
+
+        .reacted-laugh {
+            color: #ca8a04 !important;
+        }
+
+        .reacted-heart {
+            color: #dc2626 !important;
+        }
+
+        .laugh-btn i, .heart-btn i {
+            transition: color 0.2s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <ul>
+            <li><a href="home.html">Home</a></li>
+            <li class="active" ><a href="comments.html">Comments</a></li>
+            <li><a href="logout.html">Log Out</a></li>
+        </ul>
+    </div>
+    <div class="max-w-3xl mx-auto" id="jokesContainer">
+        <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">
+            More Dad Jokes For you....
+        </h2>
+    </div>
+
+    <template id="jokeTemplate">
+        <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+            <p class="text-xl font-medium text-gray-800 mb-4"></p>
+
+            <div class="flex items-center space-x-6 mb-6">
+                <button class="flex items-center space-x-2 text-yellow-500 hover:text-yellow-600 transition laugh-btn">
+                    <i data-lucide="thumbs-up" class="w-5 h-5"></i>
+                    <span class="font-medium laughs-count"></span>
+                </button>
+
+                <button class="flex items-center space-x-2 text-red-500 hover:text-red-600 transition heart-btn">
+                    <i data-lucide="heart" class="w-5 h-5"></i>
+                    <span class="font-medium hearts-count"></span>
+                </button>
+            </div>
+
+            <div class="comments-container space-y-4"></div>
+
+            <form class="mt-4 flex items-center space-x-3">
+                <input type="text" placeholder="Add a comment..." class="flex-1 rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    <i data-lucide="send" class="w-4 h-4"></i>
+                </button>
+            </form>
+        </div>
+    </template>
+
+    <template id="commentTemplate">
+        <div class="flex space-x-3">
+            <div class="avatar-container"></div>
+            <div class="flex-1 bg-gray-50 rounded-lg p-4">
+                <div class="flex items-center space-x-2 mb-1">
+                    <span class="font-medium text-gray-900 username"></span>
+                    <span class="text-sm text-gray-500 timestamp"></span>
+                </div>
+                <p class="text-gray-700 comment-text"></p>
+            </div>
+        </div>
+    </template>
+    <div class="text-center mt-8 mb-12">
+        <a href="home.html" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-black hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+            <i data-lucide="arrow-left" class="mr-2"></i>
+            Back to Home
+        </a>
+    </div>
+    <script>
+        const jokes = [
+            {
+                id: 1,
+                text: "Why don't eggs tell jokes? They'd crack up!",
+                reactions: {
+                    laughs: 9653,
+                    hearts: 4559,
+                },
+                comments: [
+                    {
+                        id: 1,
+                        username: "Smochaxrolexaddict",
+                        text: "Haiya! This one really cracked me up! 🥚",
+                        timestamp: "2 hours ago",
+                        avatar: "https://randomuser.me/api/portraits/men/16.jpg",
+                    },
+                    {
+                        id: 2,
+                        username: "Mzungumwitu",
+                        text: "Eggcellent joke! Keep them coming!",
+                        timestamp: "1 hour ago",
+                        avatar: "https://randomuser.me/api/portraits/men/3.jpg",
+                    },
+                ],
+            },
+            {
+                id: 2,
+                text: "What do you call a fake noodle? An impasta!",
+                reactions: {
+                    laughs: 4289,
+                    hearts: 345,
+                },
+                comments: [
+                    {
+                        id: 3,
+                        username: "PastaFanatic",
+                        text: "This joke is spaghetti good!",
+                        timestamp: "30 minutes ago",
+                        avatar: "https://randomuser.me/api/portraits/women/92.jpg",
+                    },
+                ],
+            },
+            {
+                id: 3,
+                text: "Two hats are on a hat rack. One hat says to the other, 'You stay here. I'm gonna go on a head.'",
+                reactions: {
+                    laughs: 1023,
+                    hearts: 876,
+                },
+                comments: [
+                    {
+                        id: 4,
+                        username: "Sean Maina",
+                        text: "Lmao! I'm on the floor",
+                        timestamp: "30 minutes ago",
+                        avatar: "https://randomuser.me/api/portraits/lego/6.jpg",
+                    },
+                ],
+            },
+            {
+                id: 4,
+                text: "How do you make six into nine without adding anything or rotating it? Remove the 's'",
+                reactions: {
+                    laughs: 923,
+                    hearts: 276,
+                },
+                comments: [
+                    {
+                        id: 5,
+                        username: "NgombefromTz",
+                        text: "Eeeh! so funny",
+                        timestamp: "30 minutes ago",
+                        avatar: "https://randomuser.me/api/portraits/men/63.jpg",
+                    },
+                    {
+                        id: 6,
+                        username: "iHatedadjokes254",
+                        text: "Not that funny tbh!",
+                        timestamp: "30 minutes ago",
+                        avatar: "https://randomuser.me/api/portraits/women/30.jpg",
+                    },
+                ],
+            },
+        ];
+
+        function createJokeElement(joke) {
+            const template = document.getElementById('jokeTemplate');
+            const jokeElement = template.content.cloneNode(true);
+
+            // Set joke content
+            jokeElement.querySelector('p').textContent = joke.text;
+
+            // Set initial reaction counts
+            const laughsCount = jokeElement.querySelector('.laughs-count');
+            const heartsCount = jokeElement.querySelector('.hearts-count');
+            laughsCount.textContent = formatNumber(joke.reactions.laughs);
+            heartsCount.textContent = formatNumber(joke.reactions.hearts);
+
+            // Set joke ID on container
+            const container = jokeElement.querySelector('.bg-white');
+            container.dataset.jokeId = joke.id;
+
+            // Add comments
+            joke.comments.forEach(comment => {
+                const commentElement = createCommentElement(comment);
+                jokeElement.querySelector('.comments-container').appendChild(commentElement);
+            });
+
+            // Get reaction buttons
+            const laughBtn = jokeElement.querySelector('.laugh-btn');
+            const heartBtn = jokeElement.querySelector('.heart-btn');
+
+            // Add click handlers with proper references
+            laughBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                handleReaction(joke.id, 'laughs', laughBtn, laughsCount);
+            });
+
+            heartBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                handleReaction(joke.id, 'hearts', heartBtn, heartsCount);
+            });
+
+            // Add comment form handler
+            jokeElement.querySelector('form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                handleCommentSubmit(e, joke.id);
+            });
+
+            return jokeElement;
+        }
+
+        function formatNumber(num) {
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+
+        function createCommentElement(comment) {
+            const template = document.getElementById('commentTemplate');
+            const commentElement = template.content.cloneNode(true);
+
+            const avatarContainer = commentElement.querySelector('.avatar-container');
+            if (comment.isIcon) {
+                avatarContainer.innerHTML = `
+                        <div class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center">
+                            <i data-lucide="user" class="w-6 h-6 text-gray-600"></i>
+                        </div>
+                    `;
+            } else {
+                avatarContainer.innerHTML = `
+                        <img src="${comment.avatar}" alt="${comment.username}" class="w-10 h-10 rounded-full object-cover">
+                    `;
+            }
+
+            commentElement.querySelector('.username').textContent = comment.username;
+            commentElement.querySelector('.timestamp').textContent = comment.timestamp;
+            commentElement.querySelector('.comment-text').textContent = comment.text;
+
+            return commentElement;
+        }
+
+        function handleReaction(jokeId, type, button, countElement) {
+            // Find the joke
+            const joke = jokes.find(j => j.id === jokeId);
+            if (!joke || !button || !countElement) return;
+
+            // Get reaction data
+            const storageKey = `joke_${jokeId}_${type}`;
+            const hasReacted = localStorage.getItem(storageKey) === 'true';
+            const icon = button.querySelector('i');
+
+            // Update reaction count
+            if (hasReacted) {
+                joke.reactions[type]--;
+                localStorage.removeItem(storageKey);
+            } else {
+                joke.reactions[type]++;
+                localStorage.setItem(storageKey, 'true');
+            }
+
+            // Update display
+            countElement.textContent = formatNumber(joke.reactions[type]);
+
+            // Update styling
+            if (type === 'laughs') {
+                button.classList.toggle('reacted-laugh', !hasReacted);
+                icon.classList.toggle('text-yellow-600', !hasReacted);
+                icon.classList.toggle('text-yellow-500', hasReacted);
+            } else if (type === 'hearts') {
+                button.classList.toggle('reacted-heart', !hasReacted);
+                icon.classList.toggle('text-red-600', !hasReacted);
+                icon.classList.toggle('text-red-500', hasReacted);
+            }
+        }
+
+        function applySavedReactions() {
+            jokes.forEach(joke => {
+                const jokeElement = document.querySelector(`[data-joke-id="${joke.id}"]`);
+                if (!jokeElement) return;
+
+                ['laughs', 'hearts'].forEach(type => {
+                    const storageKey = `joke_${joke.id}_${type}`;
+                    const hasReacted = localStorage.getItem(storageKey) === 'true';
+                    if (hasReacted) {
+                        const button = jokeElement.querySelector(`.${type}-btn`);
+                        const icon = button?.querySelector('i');
+                        const countElement = button?.querySelector(`.${type}s-count`);
+
+                        if (button && icon && countElement) {
+                            if (type === 'laughs') {
+                                button.classList.add('reacted-laugh');
+                                icon.classList.add('text-yellow-600');
+                                icon.classList.remove('text-yellow-500');
+                            } else if (type === 'hearts') {
+                                button.classList.add('reacted-heart');
+                                icon.classList.add('text-red-600');
+                                icon.classList.remove('text-red-500');
+                            }
+                        }
+                    }
+                });
+            });
+        }
+
+        function handleCommentSubmit(event, jokeId) {
+            event.preventDefault();
+            const form = event.target;
+            const input = form.querySelector('input');
+            const commentText = input.value.trim();
+
+            if (!commentText) return;
+
+            const joke = jokes.find(j => j.id === jokeId);
+            if (!joke) return;
+
+            const newComment = {
+                id: Math.max(...joke.comments.map(c => c.id)) + 1,
+                username: "You",
+                text: commentText,
+                timestamp: "Just now",
+                avatar: "",
+                isIcon: true
+            };
+
+            joke.comments.push(newComment);
+            const commentElement = createCommentElement(newComment);
+            const jokeElement = document.querySelector(`[data-joke-id="${jokeId}"]`);
+            jokeElement.querySelector('.comments-container').appendChild(commentElement);
+
+            input.value = "";
+            lucide.createIcons();
+        }
+
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('jokesContainer');
+            jokes.forEach(joke => {
+                container.appendChild(createJokeElement(joke));
+            });
+            lucide.createIcons();
+            applySavedReactions();
+        });
+    </script>
+</body>
+</html>
