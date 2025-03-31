@@ -1,6 +1,8 @@
+/* Global Styles */
 body {
     margin: 0;
-    background: white;
+    background-image: url('https://img.freepik.com/free-photo/beige-abstract-wallpaper-background-image_53876-102527.jpg');
+    background-size: cover;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -37,7 +39,7 @@ body {
         }
 
         .navbar li.active {
-            background-color: #007BFF; /* Highlight active page */
+            background-color: #007BFF;
             color: white;
         }
 
@@ -47,25 +49,25 @@ body {
     text-align: center;
 }
 
-.home {
+.home, .container {
     background-color: white;
+    padding: 20px;
+    border-radius: 15px;
+    text-align: center;
+}
+
+.home {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 20px;
     margin: 20px auto;
     width: 90%;
     max-width: 800px;
     box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
-    border-radius: 15px;
 }
 
 .container {
-    background-color: white;
-    padding: 20px;
-    border-radius: 15px;
     width: 85%;
-    text-align: center;
 }
 
 .heading {
@@ -94,14 +96,15 @@ body {
     text-transform: uppercase;
     width: 300px;
     color: white;
+    transition: all 300ms ease;
 }
 
     .btn:hover {
         background-color: #333;
         box-shadow: 0 4px 4px rgba(0, 0, 0, 0.3);
-        transition: all 300ms ease;
     }
 
+/* Feedback Section */
 .feedback {
     width: 400px;
     height: 200px;
@@ -121,10 +124,10 @@ body {
     overflow: hidden;
 }
 
-.emoji i {
-    transform: translate(0);
-    transition: .2s;
-}
+    .emoji i {
+        transform: translate(0);
+        transition: 0.2s;
+    }
 
 .rating {
     position: absolute;
@@ -135,13 +138,102 @@ body {
     display: flex;
     justify-content: center;
     gap: 8px;
-    width: auto;
 }
 
-.rating i{
-    color: #030011;
+    .rating i {
+        color: #030011;
+    }
+
+        .rating i.active {
+            color: #3820a3;
+        }
+
+/* Authentication Styles */
+.auth a {
+    text-decoration: none;
+    color: #333;
+    margin-left: 10px;
 }
 
-.rating i.active {
-    color: #3820a3;
+    .auth a.active {
+        font-weight: bold;
+    }
+
+/* Sign-Up Section */
+.signup-container, .login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+}
+
+.signup-box, .login-box {
+    background-color: rgba(0, 0, 0, 0.933);
+    padding: 30px;
+    border-radius: 10px;
+    width: 350px;
+    color: white;
+}
+
+    .signup-box h2, .login-box h2 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+    .input-group label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .input-group input {
+        width: calc(100% - 22px);
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: rgba(255, 255, 255, 0.8);
+    }
+
+.signup-box button, .login-box button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+    .signup-box button:hover, .login-box button:hover {
+        background-color: #0056b3;
+    }
+
+.links {
+    text-align: center;
+    margin-top: 20px;
+}
+
+    .links a {
+        color: #ccc;
+        text-decoration: none;
+        margin: 0 5px;
+    }
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    nav {
+        margin-top: 10px;
+    }
+
+        nav a {
+            margin: 5px 0;
+        }
 }

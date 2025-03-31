@@ -64,3 +64,74 @@ function updateRating(index) {
         emoji.style.color = colors[index];
     });
 }
+
+
+
+
+// -------------------------------- sign up ---------------------------------------
+document.getElementById('signup-form').addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    const firstname = document.getElementById('firstname').value;
+    const lastname = document.getElementById('lastname').value;
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+
+    console.log('Firstname:', firstname);
+    console.log('Lastname:', lastname);
+    console.log('Email:', email);
+    console.log('Password:', password);
+    console.log('Confirm Password:', confirmPassword);
+
+    if (password !== confirmPassword) {
+        alert("Passwords do not match!");
+        return;
+    }
+
+    // Add your signup logic here (e.g., AJAX request to a server)
+});
+
+
+
+
+// ----------------------------- Log In -------------------------------------
+document.addEventListener("DOMContentLoaded", function () {
+    // Register Form Submission
+    let registerForm = document.getElementById("registerForm");
+    if (registerForm) {
+        registerForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            let password = document.getElementById("password").value;
+            let confirmPassword = document.getElementById("confirmPassword").value;
+
+            if (password !== confirmPassword) {
+                alert("Passwords do not match!");
+            } else {
+                alert("Registration successful!");
+                this.reset();
+            }
+        });
+    }
+
+    // Login Form Submission
+    let loginForm = document.getElementById("loginForm");
+    if (loginForm) {
+        loginForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            let email = document.getElementById("email").value;
+            let password = document.getElementById("password").value;
+
+            if (email === "user@example.com" && password === "password123") {
+                alert("Login successful!");
+                window.location.href = "dashboard.html"; // Redirect to dashboard
+            } else {
+                alert("Invalid email or password!");
+            }
+        });
+    }
+});
+
+
